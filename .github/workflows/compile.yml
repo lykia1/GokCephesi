@@ -1,0 +1,18 @@
+name: Derleme Kontrolu
+on:
+  push:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        unity: ["2022.3.*", "6000.*"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+      - name: Unity kutuphaneleriyle derle
+        run: dotnet build ci/CompileCheck.csproj -c Release "-p:UnityVersion=${{ matrix.unity }}"
