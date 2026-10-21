@@ -8,7 +8,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        unity: ["2022.3.*", "6000.*"]
+        include:
+          - pkg: RocketModFix.UnityEngine.Redist
+            unity: "2022.3.*"
+          - pkg: UnityEngine.Modules
+            unity: "2021.3.33"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-dotnet@v4
@@ -18,7 +22,7 @@ jobs:
         shell: bash
         run: |
           set +e
-          dotnet build ci/CompileCheck.csproj -c Release "-p:UnityVersion=${{ matrix.unity }}" -clp:NoSummary > build.log 2>&1
+          dotnet build ci/CompileCheck.csproj -c Release "-p:UnityVersion=${{ matrix.unity }}" "-p:UnityPkg=${{ matrix.pkg }}" -clp:NoSummary > build.log 2>&1
           code=$?
           cat build.log
           # Hatalari GitHub uyarisi (annotation) olarak goster

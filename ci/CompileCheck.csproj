@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <LangVersion>9.0</LangVersion>
+    <UnityPkg Condition="'$(UnityPkg)' == ''">RocketModFix.UnityEngine.Redist</UnityPkg>
     <UnityVersion Condition="'$(UnityVersion)' == ''">2022.3.*</UnityVersion>
     <DefineConstants>$(DefineConstants);ENABLE_LEGACY_INPUT_MANAGER</DefineConstants>
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
@@ -13,6 +14,6 @@
     <Compile Include="../Assets/**/*.cs" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="UnityEngine.Modules" Version="$(UnityVersion)" />
+    <PackageReference Include="$(UnityPkg)" Version="$(UnityVersion)" />
   </ItemGroup>
 </Project>
